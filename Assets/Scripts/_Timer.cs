@@ -7,6 +7,9 @@ using System;
 public class _Timer : MonoBehaviour
 {
     public float currentTime;
+    private int messagesPerMinute;
+    private int messagesToSent;
+
     public TextMeshProUGUI timerText;
 
     int inthours;
@@ -17,9 +20,27 @@ public class _Timer : MonoBehaviour
 
     public bool isActive = true;
 
+    private void Start()
+    {
+        messagesToSent = 0;
+        messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay];
+    }
+
     private void Update()
     {
-        if (isActive) TimerTick();
+        if (isActive)
+        {
+            TimerTick();
+
+            if (intminutes > 60 / messagesPerMinute * messagesToSent)
+            {
+                //MessageManager.Trigger
+                Debug.Log("new message!");
+                messagesToSent += 1;
+
+                if (messagesToSent >= messagesPerMinute) messagesToSent = 0;
+            }
+        }
     }
 
     void TimerTick()
@@ -65,5 +86,7 @@ public class _Timer : MonoBehaviour
     public void DayChange()
     {
         currentTime = 0;
+        messagesPerMinute = 0;
+        messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay + 1];
     }
 }

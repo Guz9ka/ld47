@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    [Header("Общие данные")]
-    static int PlayerHP;
-
     public static PlayerBehavior singleton { get; private set; }
+
+    [Header("Общие данные")]
+    public static int PlayerHP;
 
     private Vector2 mousePosition;
 

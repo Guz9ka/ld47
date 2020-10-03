@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class PhoneMail : MonoBehaviour, IMessage
 {
+    public static PhoneMail singleton { get; private set; }
+
     public List<GameObject> messages = new List<GameObject>();
+
+    void Awake()
+    {
+        singleton = this;
+    }
+
     void Start()
     {
-        foreach (GameObject message in messages)
-        {
-            message.SetActive(false);
-        }
+        DeleteAllMessages();
     }
 
     public void CreateNewMessage(int messagesCount)
@@ -24,13 +29,21 @@ public class PhoneMail : MonoBehaviour, IMessage
         }
     }
 
-    public void CreateNotification()
+    public void DeleteMessage(int messageNumber)
     {
         throw new System.NotImplementedException();
     }
 
-    public void DeleteMessage(int messageNumber)
+    public void DayChange()
     {
-        throw new System.NotImplementedException();
+        DeleteAllMessages();
+    }
+
+    private void DeleteAllMessages()
+    {
+        foreach (GameObject message in messages)
+        {
+            message.SetActive(false);
+        }
     }
 }

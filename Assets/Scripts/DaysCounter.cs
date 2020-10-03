@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class DaysCounter : MonoBehaviour
 {
-    static int CurrentDay;
+    public static DaysCounter singleton { get; private set; }
+
+    public static int CurrentDay;
+
+    public List<int> messagesPerMinute = new List<int>();
 
     public delegate void ChangeDayHandler();
     public event ChangeDayHandler OnDayChange;
+
+    private void Awake()
+    {
+        singleton = this;
+    }
 
     private void Start()
     {

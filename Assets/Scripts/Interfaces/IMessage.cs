@@ -5,6 +5,5 @@ using UnityEngine;
 public interface IMessage
 {
     void CreateNewMessage(int messagesCount);
-    void CreateNotification();
     void DeleteMessage(int messageNumber);
 }

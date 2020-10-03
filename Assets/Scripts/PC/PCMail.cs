@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class PCMail : MonoBehaviour, IMessage
 {
+    public static PCMail singleton { get; private set; }
+
     public List<GameObject> messages = new List<GameObject>();
     //public Event
+
+    void Awake()
+    {
+        singleton = this;
+    }
+
     void Start()
     {
         DeleteAllMessages();
@@ -20,11 +28,6 @@ public class PCMail : MonoBehaviour, IMessage
                 messages[i].SetActive(true);
             }
         }
-    }
-
-    public void CreateNotification()
-    {
-        throw new System.NotImplementedException();
     }
 
     public void DeleteMessage(int messageNumber)
