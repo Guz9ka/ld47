@@ -1933,8 +1933,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a1bcdcd3cc668748a9a76b4a0bad236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTime: 0
+  currentTime: 0
   timerText: {fileID: 605528074}
+  isActive: 0
 --- !u!1 &1135443064
 GameObject:
   m_ObjectHideFlags: 0
@@ -3374,7 +3375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1a97dc31adac234c97494dd7a2949f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PopUpWindow: {fileID: 1407073583}
 --- !u!4 &1675783857
 Transform:
   m_ObjectHideFlags: 0
