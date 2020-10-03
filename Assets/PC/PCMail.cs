@@ -8,10 +8,7 @@ public class PCMail : MonoBehaviour, IMessage
     //public Event
     void Start()
     {
-        foreach(GameObject message in messages)
-        {
-            message.SetActive(false);
-        }
+        DeleteAllMessages();
     }
 
     public void CreateNewMessage(int messagesCount)
@@ -33,5 +30,18 @@ public class PCMail : MonoBehaviour, IMessage
     public void DeleteMessage(int messageNumber)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void DayChange()
+    {
+        DeleteAllMessages();
+    }
+
+    private void DeleteAllMessages()
+    {
+        foreach(GameObject message in messages)
+        {
+            message.SetActive(false);
+        }
     }
 }
