@@ -10,7 +10,7 @@ public class _Timer : MonoBehaviour
     private int messagesPerMinute;
     private int messagesSent;
 
-    public TextMeshProUGUI timerText;
+    public List<TextMeshProUGUI> timerText = new List<TextMeshProUGUI>();
 
     int inthours;
     string hours;
@@ -80,7 +80,10 @@ public class _Timer : MonoBehaviour
         #endregion
 
         string formattedTime = inthours + ":" + intminutes;
-        timerText.text = formattedTime;
+        foreach(TextMeshProUGUI timerPanel in timerText)
+        {
+            timerPanel.text = formattedTime;
+        }
     }
 
     public void DayChange()

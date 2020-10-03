@@ -31,7 +31,7 @@ public class PhoneMail : MonoBehaviour, IMessage
 
     public void DeleteMessage(int messageNumber)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void DayChange()
