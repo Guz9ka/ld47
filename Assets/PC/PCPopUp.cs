@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PCPopUp : MonoBehaviour, IWindow
 {
-    public GameObject PopUpWindow;
+    public static GameObject PopUpWindow;
 
     public void WindowSwitch()
     {
         PopUpWindow.SetActive(!PopUpWindow.activeSelf);
+    }
+
+    public static void DayChange()
+    {
+        PopUpWindow.SetActive(false);
     }
 }

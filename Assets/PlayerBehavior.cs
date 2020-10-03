@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 public class PlayerBehavior : MonoBehaviour
 {
     [Header("Общие данные")]
-    int PlayerHP;
-    int CurrentDay;
+    static int PlayerHP;
 
     public static PlayerBehavior singleton { get; private set; }
 
@@ -40,5 +39,10 @@ public class PlayerBehavior : MonoBehaviour
     {
         currentMessage = message;
         originalPosition = message.transform.position;
+    }
+
+    public static void DayChange()
+    {
+        PlayerHP = 100;
     }
 }

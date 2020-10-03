@@ -6,18 +6,35 @@ using System;
 
 public class _Timer : MonoBehaviour
 {
-    public float startTime;
+    public static float currentTime;
     public TextMeshProUGUI timerText;
 
     string hours;
     string minutes;
 
+    public bool isActive;
+
     private void Update()
     {
-        startTime += Time.deltaTime;
+        if (isActive) TimerTick();
+    }
 
-        int inthours = Convert.ToInt32(startTime / 60);
-        int intminutes = Convert.ToInt32(startTime % 60);
+    void TimerTick()
+    {
+        currentTime += Time.deltaTime;
+
+        int inthours = Convert.ToInt32(currentTime / 60);
+        int intminutes = Convert.ToInt32(currentTime % 60);
+
+        #region Format time
+        if (inthours >= 24)
+        {
+            currentTime = 0;
+        }
+        if (intminutes > 59)
+        {
+            intminutes = 0;
+        }
 
         if (inthours.ToString().Length < 2)
         {
@@ -28,7 +45,7 @@ public class _Timer : MonoBehaviour
             hours = inthours.ToString();
         }
 
-        if(intminutes.ToString().Length < 2)
+        if (intminutes.ToString().Length < 2)
         {
             minutes = $"0{intminutes}";
         }
@@ -36,17 +53,14 @@ public class _Timer : MonoBehaviour
         {
             minutes = intminutes.ToString();
         }
-
-        if(inthours > 24)
-        {
-            startTime = 0;
-        }
-        if(intminutes > 59)
-        {
-            intminutes = 0;
-        }
+        #endregion
 
         string formattedTime = hours + " : " + minutes;
         timerText.text = formattedTime;
+    }
+
+    public static void DayChange()
+    {
+        currentTime = 0;
     }
 }
