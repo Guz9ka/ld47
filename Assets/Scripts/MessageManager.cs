@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class MessageManager : MonoBehaviour
 {
-    public delegate void OnMessageArrive();
-    public event OnMessageArrive MessageHandler;
+    public static MessageManager singleton { get; private set; }
+
+    public delegate void MessageHandler();
+    public event MessageHandler MessageArrived;
+
+    private void Awake()
+    {
+        singleton = this;
+    }
 
     private void Start()
     {
-        MessageHandler += AddNewMessages;
+        MessageArrived += AddNewMessages;
         //звук
     }
 
@@ -40,5 +47,10 @@ public class MessageManager : MonoBehaviour
 
         PCmail.CreateNewMessage(1);
         //PCmail.CreateNotification();
+    }
+
+    public void TriggerMessageEvent()
+    {
+        MessageArrived.Invoke();
     }
 }
