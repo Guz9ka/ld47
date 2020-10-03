@@ -5,11 +5,12 @@ using UnityEngine.EventSystems;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public static PlayerBehavior singleton { get; private set; }
+
     private Vector2 mousePosition;
 
     private GameObject currentMessage;
     private Vector2 originalPosition;
-    public static PlayerBehavior singleton { get; private set; }
 
     private void Awake()
     {
