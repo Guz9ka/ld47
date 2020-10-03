@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    [Header("Общие данные")]
+    int PlayerHP;
+    int CurrentDay;
+
     public static PlayerBehavior singleton { get; private set; }
 
     private Vector2 mousePosition;
