@@ -135,7 +135,7 @@ public class _Timer : MonoBehaviour
 
         messageManager.messagingIsAvailable = false;
 
-        Debug.Log("new message!");
+
         messageManager.TriggerMessageEvent();
         yield return new WaitForSeconds(messageManager.delayBetweenMessages);
 

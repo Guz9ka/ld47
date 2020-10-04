@@ -19,8 +19,10 @@ public class DaysCounter : MonoBehaviour
 
     public TMPro.TextMeshProUGUI day;
     public TMPro.TextMeshProUGUI days;
+    public TMPro.TextMeshProUGUI dayTitleScreen;
     public List<GameObject> switchOnDay = new List<GameObject>();
     public GameObject pelena;
+    public GameObject timerText;
 
     private void Awake()
     {
@@ -47,16 +49,17 @@ public class DaysCounter : MonoBehaviour
     {
         day.text = "Day: "+ CurrentDay.ToString();
         days.text = "Day: " + CurrentDay.ToString();
+        dayTitleScreen.text = "Day: " + CurrentDay.ToString();
     }
 
     public void TriggerAlarm()
     {
         if (AlarmAvailable)
         {
-            foreach(var obj in switchOnDay)
-            {
-                obj.SetActive(!obj.activeSelf);
-            }
+            switchOnDay[3].SetActive(true);
+            switchOnDay[4].SetActive(true);
+            switchOnDay[5].SetActive(false);
+            timerText.SetActive(true);
             pelena.SetActive(false);
             AlarmAvailable = false;
             _SoundManager.singleton.PlaySound(0);
@@ -69,8 +72,9 @@ public class DaysCounter : MonoBehaviour
         {
             foreach (var obj in switchOnDay)
             {
-                obj.SetActive(!obj.activeSelf);
+                obj.SetActive(false);
             }
+            timerText.SetActive(true);
             pelena.SetActive(true);
             DayEndAvailable = false;
             _SoundManager.singleton.PlaySound(6);

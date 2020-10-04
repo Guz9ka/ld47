@@ -45,14 +45,14 @@ public class PhoneMail : MonoBehaviour, IMessage
         { 
             available = 0;
         }
-        Debug.Log(available);
+
         messages[available].SetActive(false);
         activeMessages.RemoveAt(available);
     }
 
     public void DayChange()
     {
-        DeleteAllMessages();
+        //DeleteAllMessages();
     }
 
     private void DeleteAllMessages()

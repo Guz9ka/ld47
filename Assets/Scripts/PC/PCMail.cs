@@ -30,12 +30,13 @@ public class PCMail : MonoBehaviour, IMessage
 
     public void CreateNewMessage(int messagesCount)
     {
-        for (int i = 0; i < messagesCount; i++)
+        for (int i = 0; i < messages.Count; i++)
         {
-            if(messages[i].activeSelf != true)
+            if (messages[i].activeSelf == false)
             {
                 messages[i].SetActive(true);
                 activeMessages.Add(messages[i]);
+                break;
             }
         }
     }
@@ -64,7 +65,7 @@ public class PCMail : MonoBehaviour, IMessage
 
     public void DayChange()
     {
-        DeleteAllMessages();
+        //DeleteAllMessages();
     }
 
     private void DeleteAllMessages()
