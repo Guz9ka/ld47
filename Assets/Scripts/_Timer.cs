@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine;
 
 public class _Timer : MonoBehaviour
 {
@@ -13,12 +13,8 @@ public class _Timer : MonoBehaviour
     public int dayStartTime;
     public float timeBetweenDaysMultiplier;
 
-<<<<<<< HEAD
-    [Header("Отправка сообщений")]
-    private int messagesPerMinute;
-    private int messagesSent;
-=======
->>>>>>> master
+    public int HpToDecrease;
+
 
     public List<TextMeshProUGUI> timerText = new List<TextMeshProUGUI>();
 
@@ -31,20 +27,13 @@ public class _Timer : MonoBehaviour
 
     public bool isActive = true;
 
+
+
     private void Awake()
     {
         singleton = this;
     }
 
-<<<<<<< HEAD
-    private void Start()
-    {
-        messagesSent = 0;
-        messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay];
-    }
-
-=======
->>>>>>> master
     private void Update()
     {
         if (isActive)
@@ -56,23 +45,24 @@ public class _Timer : MonoBehaviour
                 DaysCounter.singleton.TriggerDayChangeEvent();
             }
 
+            if (currentTime > 300)
+            {
+                DaysCounter.singleton.TriggerAlarm();
+            }
+
+            if (currentTime > dayEndTime)
+            {
+                DaysCounter.singleton.TriggerDayEnd();
+            }
+
             //Логика работы таймера
             if (currentTime > dayStartTime && currentTime < dayEndTime)
             {
                 TimerNormalSpeed();
-
-<<<<<<< HEAD
-                if (intMinutes > 60 / messagesPerMinute * messagesSent)
-                {
-                    MessageManager.singleton.TriggerMessageEvent();
-                    messagesSent += 1;
-
-                    if (messagesSent >= messagesPerMinute) messagesSent = 1;
-=======
+                StartCoroutine("DecreasePlayerHP");
                 if (MessageManager.singleton.messagingIsAvailable)
                 {
                     StartCoroutine("TriggerMessageEvent");
->>>>>>> master
                 }
             }
             else
@@ -82,6 +72,15 @@ public class _Timer : MonoBehaviour
         }
     }
 
+    IEnumerator DecreasePlayerHP()
+    {
+        yield return new WaitForSeconds(1);
+        if (PhoneMail.singleton.activeMessages.Count > 0 || PCMail.singleton.activeMessages.Count > 0)
+        {
+            PlayerBehavior.singleton.AddPlayerHP(-HpToDecrease * Time.deltaTime);
+
+        }
+    }
 
     void TimerNormalSpeed()
     {
@@ -89,11 +88,7 @@ public class _Timer : MonoBehaviour
         TimerTick(currentTime);
     }
 
-<<<<<<< HEAD
-    private void TimerSpeedUp()
-=======
     void TimerSpeedUp()
->>>>>>> master
     {
         currentTime += Time.deltaTime * timeBetweenDaysMultiplier;
         TimerTick(currentTime);
@@ -101,7 +96,6 @@ public class _Timer : MonoBehaviour
 
     void TimerTick(float currentTime)
     {
-
         double doubleHours = Convert.ToDouble(currentTime / 60);
         double doubleMinutes = Convert.ToDouble(currentTime % 60);
 
@@ -129,19 +123,12 @@ public class _Timer : MonoBehaviour
         #endregion
 
         string formattedTime = strHours + ":" + strMinutes;
-        foreach(TextMeshProUGUI timerPanel in timerText)
+        foreach (TextMeshProUGUI timerPanel in timerText)
         {
             timerPanel.text = formattedTime;
         }
     }
 
-<<<<<<< HEAD
-    public void DayChange()
-    {
-        messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay + 1];
-        messagesSent = 0;
-        //отменить все ивенты
-=======
     IEnumerator TriggerMessageEvent()
     {
         var messageManager = MessageManager.singleton;
@@ -153,6 +140,10 @@ public class _Timer : MonoBehaviour
         yield return new WaitForSeconds(messageManager.delayBetweenMessages);
 
         messageManager.messagingIsAvailable = true;
->>>>>>> master
+    }
+
+    public void DayEnd()
+    {
+        StopAllCoroutines();
     }
 }

@@ -9,7 +9,7 @@ public class PCMail : MonoBehaviour, IMessage
     public GameObject mailMessage;
 
     public List<GameObject> messages = new List<GameObject>();
-    private List<GameObject> activeMessages = new List<GameObject>();
+    public List<GameObject> activeMessages = new List<GameObject>();
     //public Event
 
     void Awake()
@@ -42,6 +42,8 @@ public class PCMail : MonoBehaviour, IMessage
 
     public void DeleteMessage()
     {
+        PlayerBehavior.singleton.AddPlayerHP(5);
+
         int available = activeMessages.Count - 1; //last message in list
         messages[available].SetActive(false);
         activeMessages.RemoveAt(available);
@@ -49,11 +51,13 @@ public class PCMail : MonoBehaviour, IMessage
 
     public void OpenMessage()
     {
+        _SoundManager.singleton.PlaySound(3);
         mailMessage.SetActive(true);
     }
 
     public void CloseMessage()
     {
+        _SoundManager.singleton.PlaySound(3);
         mailMessage.SetActive(false);
         DeleteMessage();
     }

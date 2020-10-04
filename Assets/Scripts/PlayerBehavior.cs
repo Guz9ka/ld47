@@ -2,27 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class PlayerBehavior : MonoBehaviour
 {
     public static PlayerBehavior singleton { get; private set; }
 
     [Header("Общие данные")]
-    public static int PlayerHP;
+    public static float PlayerHP;
 
     private Vector2 mousePosition;
 
     private GameObject currentMessage;
     private Vector2 originalPosition;
 
+    public TextMeshProUGUI hpBar;
+
     private void Awake()
     {
         singleton = this;
     }
 
+    private void Start()
+    {
+        PlayerHP = 100;
+    }
+
     void Update()
     {
+        if(PlayerHP <= 0)
+        {
+            EndScene.singleton.StartEndScene();
+        }
+
         mousePosition = Input.mousePosition;
+        hpBar.text = $"HP:{(int)PlayerHP}";
 
         if (currentMessage != null)
         {
@@ -33,7 +47,6 @@ public class PlayerBehavior : MonoBehaviour
                 PhoneMail.singleton.DeleteMessage();
                 currentMessage.transform.position = originalPosition;
                 currentMessage = null;
-                Debug.Log("delete");
             }
         }
     }
@@ -49,7 +62,16 @@ public class PlayerBehavior : MonoBehaviour
         originalPosition = message.transform.position;
     }
 
-    public static void DayChange()
+    public void AddPlayerHP(float sum) 
+    {
+        PlayerHP += sum;
+        if(PlayerHP > 100)
+        {
+            PlayerHP = 100;
+        }
+    }
+
+    public void DayChange()
     {
         PlayerHP = 100;
     }

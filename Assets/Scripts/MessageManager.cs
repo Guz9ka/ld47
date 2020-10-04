@@ -1,8 +1,4 @@
 ﻿using System.Collections;
-<<<<<<< HEAD
-using System.Collections.Generic;
-=======
->>>>>>> master
 using UnityEngine;
 
 public class MessageManager : MonoBehaviour
@@ -12,13 +8,10 @@ public class MessageManager : MonoBehaviour
     public delegate void MessageHandler();
     public event MessageHandler MessageArrived;
 
-<<<<<<< HEAD
-=======
     [Header("Отправка сообщений")]
     public float delayBetweenMessages;
     public bool messagingIsAvailable;
 
->>>>>>> master
     private void Awake()
     {
         singleton = this;
@@ -27,11 +20,8 @@ public class MessageManager : MonoBehaviour
     private void Start()
     {
         MessageArrived += AddNewMessages;
-<<<<<<< HEAD
-=======
         messagingIsAvailable = true;
         delayBetweenMessages = DaysCounter.singleton.delayBetweenMessages[DaysCounter.CurrentDay];
->>>>>>> master
         //звук
     }
 
@@ -46,11 +36,6 @@ public class MessageManager : MonoBehaviour
                 SendMessageOnPC();
                 break;
         }
-<<<<<<< HEAD
-
-        Debug.Log("new message!");
-=======
->>>>>>> master
     }
 
     void SendMessageOnPhone()
@@ -58,23 +43,22 @@ public class MessageManager : MonoBehaviour
         var phoneMail = PhoneMail.singleton;
 
         phoneMail.CreateNewMessage(1);
-        //phoneMail.CreateNotification();
+        _SoundManager.singleton.PlaySound(2);
     }
 
     void SendMessageOnPC()
     {
         var PCmail = PCMail.singleton;
+        PCPopUp.singleton.WindowSwitch();
 
         PCmail.CreateNewMessage(1);
-        //PCmail.CreateNotification();
+        _SoundManager.singleton.PlaySound(1);
     }
 
     public void TriggerMessageEvent()
     {
         MessageArrived.Invoke();
     }
-<<<<<<< HEAD
-=======
 
     public void DayChange()
     {
@@ -82,5 +66,4 @@ public class MessageManager : MonoBehaviour
         messagingIsAvailable = true;
         //отменить все ивенты
     }
->>>>>>> master
 }

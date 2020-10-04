@@ -7,7 +7,7 @@ public class PhoneMail : MonoBehaviour, IMessage
     public static PhoneMail singleton { get; private set; }
 
     public List<GameObject> messages = new List<GameObject>();
-    private List<GameObject> activeMessages = new List<GameObject>();
+    public List<GameObject> activeMessages = new List<GameObject>();
 
     void Awake()
     {
@@ -38,7 +38,8 @@ public class PhoneMail : MonoBehaviour, IMessage
 
     public void DeleteMessage()
     {
-        
+        PlayerBehavior.singleton.AddPlayerHP(5);
+
         int available = activeMessages.Count - 1; //last message in list
         if (available < 0) 
         { 
