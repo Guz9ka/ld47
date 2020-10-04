@@ -7,16 +7,22 @@ using System;
 public class _Timer : MonoBehaviour
 {
     public float currentTime;
+    public int dayEndTime;
+    public int dayStartTime;
+    public float timeBetweenDaysMultiplier;
+
+    [Header("Отправка сообщений")]
     private int messagesPerMinute;
     private int messagesSent;
 
     public List<TextMeshProUGUI> timerText = new List<TextMeshProUGUI>();
 
-    int inthours;
-    string hours;
+    [Header("Работа со временем")]
+    int intHours;
+    string strHours;
 
-    int intminutes;
-    string minutes;
+    int intMinutes;
+    string strMinutes;
 
     public bool isActive = true;
 
@@ -30,55 +36,73 @@ public class _Timer : MonoBehaviour
     {
         if (isActive)
         {
-            TimerTick();
-
-            if (intminutes > 60 / messagesPerMinute * messagesSent)
+            if(currentTime > dayStartTime && currentTime < dayEndTime)
             {
-                MessageManager.singleton.TriggerMessageEvent();
-                messagesSent += 1;
+                TimerNormalSpeed();
 
-                if (messagesSent >= messagesPerMinute) messagesSent = 1;
+                if (intMinutes > 60 / messagesPerMinute * messagesSent)
+                {
+                    MessageManager.singleton.TriggerMessageEvent();
+                    messagesSent += 1;
+
+                    if (messagesSent >= messagesPerMinute) messagesSent = 1;
+                }
+            }
+            else
+            {
+                TimerSpeedUp();
             }
         }
     }
 
-    void TimerTick()
+
+    void TimerNormalSpeed()
     {
         currentTime += Time.deltaTime;
+        TimerTick(currentTime);
+    }
 
-        inthours = Convert.ToInt32(currentTime / 60);
-        intminutes = Convert.ToInt32(currentTime % 60);
+    private void TimerSpeedUp()
+    {
+        currentTime += Time.deltaTime;
+        TimerTick(currentTime * timeBetweenDaysMultiplier);
+    }
+
+    void TimerTick(float currentTime)
+    {
+
+        double doubleHours = Convert.ToDouble(currentTime / 60);
+        double doubleMinutes = Convert.ToDouble(currentTime % 60);
+
+        intHours = (int)doubleHours;
+        intMinutes = (int)doubleMinutes;
 
         #region Format time
-        if (inthours >= 24)
+        if (intHours >= 24 || intMinutes > 59)
         {
             currentTime = 0;
         }
-        if (intminutes > 59)
-        {
-            intminutes = 0;
-        }
 
-        if (inthours.ToString().Length == 1)
+        if (intHours.ToString().Length == 1)
         {
-            hours = $"0{inthours}";
+            strHours = $"0{intHours}";
         }
         else
         {
-            hours = inthours.ToString();
+            strHours = intHours.ToString();
         }
 
-        if (intminutes.ToString().Length == 1)
+        if (intMinutes.ToString().Length == 1)
         {
-            minutes = $"0{intminutes}";
+            strMinutes = $"0{intMinutes}";
         }
         else
         {
-            minutes = intminutes.ToString();
+            strMinutes = intMinutes.ToString();
         }
         #endregion
 
-        string formattedTime = inthours + ":" + intminutes;
+        string formattedTime = strHours + ":" + strMinutes;
         foreach(TextMeshProUGUI timerPanel in timerText)
         {
             timerPanel.text = formattedTime;
@@ -90,5 +114,6 @@ public class _Timer : MonoBehaviour
         currentTime = 0;
         messagesPerMinute = 0;
         messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay + 1];
+        //отменить все ивенты
     }
 }
