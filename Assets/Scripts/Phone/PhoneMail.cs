@@ -21,7 +21,6 @@ public class PhoneMail : MonoBehaviour, IMessage
         activeMessages.Add(messages[1]);
         activeMessages.Add(messages[2]);
         activeMessages.Add(messages[3]);
-        activeMessages.Add(messages[4]);
     }
 
     public void CreateNewMessage(int messagesCount)
