@@ -6,6 +6,8 @@ using System;
 
 public class _Timer : MonoBehaviour
 {
+    public static _Timer singleton { get; private set; }
+
     public float currentTime;
     public int dayEndTime;
     public int dayStartTime;
@@ -26,6 +28,11 @@ public class _Timer : MonoBehaviour
 
     public bool isActive = true;
 
+    private void Awake()
+    {
+        singleton = this;
+    }
+
     private void Start()
     {
         messagesSent = 0;
@@ -36,7 +43,15 @@ public class _Timer : MonoBehaviour
     {
         if (isActive)
         {
-            if(currentTime > dayStartTime && currentTime < dayEndTime)
+            //Change Day
+            if (currentTime >= 1440)
+            {
+                currentTime = 0;
+                DaysCounter.singleton.TriggerDayChangeEvent();
+            }
+
+            //Логика работы таймера
+            if (currentTime > dayStartTime && currentTime < dayEndTime)
             {
                 TimerNormalSpeed();
 
@@ -64,8 +79,8 @@ public class _Timer : MonoBehaviour
 
     private void TimerSpeedUp()
     {
-        currentTime += Time.deltaTime;
-        TimerTick(currentTime * timeBetweenDaysMultiplier);
+        currentTime += Time.deltaTime * timeBetweenDaysMultiplier;
+        TimerTick(currentTime);
     }
 
     void TimerTick(float currentTime)
@@ -78,11 +93,6 @@ public class _Timer : MonoBehaviour
         intMinutes = (int)doubleMinutes;
 
         #region Format time
-        if (intHours >= 24 || intMinutes > 59)
-        {
-            currentTime = 0;
-        }
-
         if (intHours.ToString().Length == 1)
         {
             strHours = $"0{intHours}";
@@ -111,9 +121,8 @@ public class _Timer : MonoBehaviour
 
     public void DayChange()
     {
-        currentTime = 0;
-        messagesPerMinute = 0;
         messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay + 1];
+        messagesSent = 0;
         //отменить все ивенты
     }
 }

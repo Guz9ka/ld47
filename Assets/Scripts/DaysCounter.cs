@@ -11,7 +11,7 @@ public class DaysCounter : MonoBehaviour
     public List<int> messagesPerMinute = new List<int>();
 
     public delegate void ChangeDayHandler();
-    public event ChangeDayHandler OnDayChange;
+    public event ChangeDayHandler DayChanged;
 
     private void Awake()
     {
@@ -20,11 +20,22 @@ public class DaysCounter : MonoBehaviour
 
     private void Start()
     {
-        OnDayChange += DayChange;
+        DayChanged += DayChange;
+        DayChanged += PCMail.singleton.DayChange;
+        DayChanged += PCPopUp.DayChange;
+        DayChanged += PhoneMail.singleton.DayChange;
+        DayChanged += PlayerBehavior.DayChange;
+        DayChanged += _Timer.singleton.DayChange;
     }
 
     void DayChange()
     {
         CurrentDay += 1;
+    }
+
+    public void TriggerDayChangeEvent()
+    {
+        Debug.Log($"new day {CurrentDay}!");
+        DayChanged.Invoke();
     }
 }

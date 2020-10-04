@@ -26,7 +26,6 @@ public class PCMail : MonoBehaviour, IMessage
         activeMessages.Add(messages[3]);
         activeMessages.Add(messages[4]);
         activeMessages.Add(messages[5]);
-        activeMessages.Add(messages[6]);
     }
 
     public void CreateNewMessage(int messagesCount)

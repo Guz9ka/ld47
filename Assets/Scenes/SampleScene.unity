@@ -2218,8 +2218,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a1bcdcd3cc668748a9a76b4a0bad236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTime: 0
-  timerText: []
+  currentTime: 1
+  dayEndTime: 1080
+  dayStartTime: 540
+  timeBetweenDaysMultiplier: 100
+  timerText:
+  - {fileID: 605528074}
   isActive: 1
 --- !u!1 &1135443064
 GameObject:
