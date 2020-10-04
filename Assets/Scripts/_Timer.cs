@@ -13,9 +13,12 @@ public class _Timer : MonoBehaviour
     public int dayStartTime;
     public float timeBetweenDaysMultiplier;
 
+<<<<<<< HEAD
     [Header("Отправка сообщений")]
     private int messagesPerMinute;
     private int messagesSent;
+=======
+>>>>>>> master
 
     public List<TextMeshProUGUI> timerText = new List<TextMeshProUGUI>();
 
@@ -33,12 +36,15 @@ public class _Timer : MonoBehaviour
         singleton = this;
     }
 
+<<<<<<< HEAD
     private void Start()
     {
         messagesSent = 0;
         messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay];
     }
 
+=======
+>>>>>>> master
     private void Update()
     {
         if (isActive)
@@ -55,12 +61,18 @@ public class _Timer : MonoBehaviour
             {
                 TimerNormalSpeed();
 
+<<<<<<< HEAD
                 if (intMinutes > 60 / messagesPerMinute * messagesSent)
                 {
                     MessageManager.singleton.TriggerMessageEvent();
                     messagesSent += 1;
 
                     if (messagesSent >= messagesPerMinute) messagesSent = 1;
+=======
+                if (MessageManager.singleton.messagingIsAvailable)
+                {
+                    StartCoroutine("TriggerMessageEvent");
+>>>>>>> master
                 }
             }
             else
@@ -77,7 +89,11 @@ public class _Timer : MonoBehaviour
         TimerTick(currentTime);
     }
 
+<<<<<<< HEAD
     private void TimerSpeedUp()
+=======
+    void TimerSpeedUp()
+>>>>>>> master
     {
         currentTime += Time.deltaTime * timeBetweenDaysMultiplier;
         TimerTick(currentTime);
@@ -119,10 +135,24 @@ public class _Timer : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     public void DayChange()
     {
         messagesPerMinute = DaysCounter.singleton.messagesPerMinute[DaysCounter.CurrentDay + 1];
         messagesSent = 0;
         //отменить все ивенты
+=======
+    IEnumerator TriggerMessageEvent()
+    {
+        var messageManager = MessageManager.singleton;
+
+        messageManager.messagingIsAvailable = false;
+
+        Debug.Log("new message!");
+        messageManager.TriggerMessageEvent();
+        yield return new WaitForSeconds(messageManager.delayBetweenMessages);
+
+        messageManager.messagingIsAvailable = true;
+>>>>>>> master
     }
 }
