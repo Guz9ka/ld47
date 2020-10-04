@@ -7,6 +7,7 @@ public class PhoneMail : MonoBehaviour, IMessage
     public static PhoneMail singleton { get; private set; }
 
     public List<GameObject> messages = new List<GameObject>();
+    private List<GameObject> activeMessages = new List<GameObject>();
 
     void Awake()
     {
@@ -15,23 +16,38 @@ public class PhoneMail : MonoBehaviour, IMessage
 
     void Start()
     {
-        DeleteAllMessages();
+        //DeleteAllMessages();
+        activeMessages.Add(messages[0]);
+        activeMessages.Add(messages[1]);
+        activeMessages.Add(messages[2]);
+        activeMessages.Add(messages[3]);
+        activeMessages.Add(messages[4]);
     }
 
     public void CreateNewMessage(int messagesCount)
     {
-        for (int i = 0; i < messagesCount; i++)
+        for (int i = 0; i < messages.Count; i++)
         {
-            if (messages[i].activeSelf != true)
+            if (messages[i].activeSelf == false)
             {
                 messages[i].SetActive(true);
+                activeMessages.Add(messages[i]);
+                break;
             }
         }
     }
 
-    public void DeleteMessage(int messageNumber)
+    public void DeleteMessage()
     {
         
+        int available = activeMessages.Count - 1; //last message in list
+        if (available < 0) 
+        { 
+            available = 0;
+        }
+        Debug.Log(available);
+        messages[available].SetActive(false);
+        activeMessages.RemoveAt(available);
     }
 
     public void DayChange()

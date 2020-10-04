@@ -22,7 +22,7 @@ public class MessageManager : MonoBehaviour
 
     void AddNewMessages()
     {
-        switch (Random.Range(1, 2))
+        switch (Random.Range(1, 3))
         {
             case 1:
                 SendMessageOnPhone();
@@ -31,6 +31,8 @@ public class MessageManager : MonoBehaviour
                 SendMessageOnPC();
                 break;
         }
+
+        Debug.Log("new message!");
     }
 
     void SendMessageOnPhone()

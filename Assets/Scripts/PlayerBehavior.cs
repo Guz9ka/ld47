@@ -27,6 +27,14 @@ public class PlayerBehavior : MonoBehaviour
         if (currentMessage != null)
         {
             InteractPhoneMessage();
+
+            if(currentMessage.transform.position.x > originalPosition.x + 25 || currentMessage.transform.position.x < originalPosition.x - 25)
+            {
+                PhoneMail.singleton.DeleteMessage();
+                currentMessage.transform.position = originalPosition;
+                currentMessage = null;
+                Debug.Log("delete");
+            }
         }
     }
 

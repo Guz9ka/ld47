@@ -35,10 +35,9 @@ public class _Timer : MonoBehaviour
             if (intminutes > 60 / messagesPerMinute * messagesSent)
             {
                 MessageManager.singleton.TriggerMessageEvent();
-                Debug.Log("new message!");
                 messagesSent += 1;
 
-                if (messagesSent >= messagesPerMinute) messagesSent = 0;
+                if (messagesSent >= messagesPerMinute) messagesSent = 1;
             }
         }
     }

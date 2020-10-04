@@ -6,7 +6,10 @@ public class PCMail : MonoBehaviour, IMessage
 {
     public static PCMail singleton { get; private set; }
 
+    public GameObject mailMessage;
+
     public List<GameObject> messages = new List<GameObject>();
+    private List<GameObject> activeMessages = new List<GameObject>();
     //public Event
 
     void Awake()
@@ -16,7 +19,14 @@ public class PCMail : MonoBehaviour, IMessage
 
     void Start()
     {
-        DeleteAllMessages();
+        //DeleteAllMessages();
+        activeMessages.Add(messages[0]);
+        activeMessages.Add(messages[1]);
+        activeMessages.Add(messages[2]);
+        activeMessages.Add(messages[3]);
+        activeMessages.Add(messages[4]);
+        activeMessages.Add(messages[5]);
+        activeMessages.Add(messages[6]);
     }
 
     public void CreateNewMessage(int messagesCount)
@@ -26,13 +36,27 @@ public class PCMail : MonoBehaviour, IMessage
             if(messages[i].activeSelf != true)
             {
                 messages[i].SetActive(true);
+                activeMessages.Add(messages[i]);
             }
         }
     }
 
-    public void DeleteMessage(int messageNumber)
+    public void DeleteMessage()
     {
-        throw new System.NotImplementedException();
+        int available = activeMessages.Count - 1; //last message in list
+        messages[available].SetActive(false);
+        activeMessages.RemoveAt(available);
+    }
+
+    public void OpenMessage()
+    {
+        mailMessage.SetActive(true);
+    }
+
+    public void CloseMessage()
+    {
+        mailMessage.SetActive(false);
+        DeleteMessage();
     }
 
     public void DayChange()
