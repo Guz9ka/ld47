@@ -74,6 +74,7 @@ public class DaysCounter : MonoBehaviour
             {
                 obj.SetActive(false);
             }
+            switchOnDay[5].SetActive(true);
             timerText.SetActive(true);
             pelena.SetActive(true);
             DayEndAvailable = false;
